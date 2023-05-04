@@ -1,0 +1,225 @@
+.main {
+    display: flex;
+    min-height: 100vh;
+}
+
+.rubricator {
+    z-index: -1;
+    .rubricator__button {
+        cursor: pointer;
+        display: flex;
+        position: absolute;
+        left: 101.1%;
+        top: 16%;
+        width: 10.3%;
+        height: 4.1%;
+        background: #FFE145;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        background-image: url('../public/images/lines.svg');
+        background-position: center;
+        background-size: cover;
+        background-size: 64% 65%;
+        background-repeat: no-repeat;
+    }
+    .rubricator__filter {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 13px;
+        color: #F2F2F2;
+        position: absolute;
+        display: none;
+        width: 39%;
+        height: 32.5%;
+        left: 98%;
+        top: 20.5%;
+        background: #3A3A3A;
+        border: 6px solid #000000;
+        border-radius: 0px 10px 10px 0px;
+        &_clicked {
+            display: flex;
+        }
+        .filter__content {
+            justify-content: space-between; 
+            flex-direction: column;
+            display: flex;
+            width: 83%;
+            height: 96.5%;
+            margin-top: 4%;
+            margin-left: 11.5%;
+            .content__option {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.statusButton {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background-image: url('../public/images/statusOff.svg');
+    background-size: cover;
+    &_checked {
+        background-image: url('../public/images/statusOn.svg');
+    }
+}
+
+.fullLeftbar {
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    display: flex;
+    width: 35.4%;
+    .addButton {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        background: #3A3A3A;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        width: 8.2%;
+        height: 3.2%;
+        left: 101.1%;
+        z-index: -1;
+        top: 11%;
+        color: #FFE145;
+        font-size: 20px;
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 400;
+    }
+
+
+    .leftbar {
+        position: relative;
+        overflow-x: visible;
+        width: 89.7%;
+        background: #3A3A3A;
+        border-right: 6px solid #000000;
+        display: flex;
+        justify-content: center;
+        left: -89.7%;
+        &_openedLeftbar {
+            left: 0%;
+        }
+        .leftbar__statusButton {
+            display: inline-block;
+            position: absolute;
+            left: 83.5%;
+            top: 6.4%;
+            width: 6.5%;
+            height: 3.5%;
+        }
+        .leftbar__content {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 90.3%;
+            height: 83.2%;
+            margin-top: 15%;
+            .content__title {
+                font-family: 'Montserrat Alternates';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 30px;
+                color: #F2F2F2;
+                width: 79.3%;
+                margin-top: 2%;
+                height: 13%;
+                align-items: flex-end;
+                display: flex;
+            }
+            .content__photos {
+                width: 85.3%;
+                height: 34%;
+                margin-top: 5%;
+                border: 1px solid green;
+            }
+            .content__description {
+                font-family: 'Noto Sans';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 15px;
+                color: #F2F2F2;
+                width: 80%;
+                height: 48%;
+                margin-top: 1%;
+                .price {
+                    height: 11.5%;
+                    align-items: flex-end;
+                    display: flex;
+                }
+                .description {
+                        padding-top: 5%;
+                    .title {
+                        margin-bottom: 5%;
+                        color: #FFE145;
+                    }
+                    .text {
+                        margin-bottom: 7%;
+                    }
+                    .adress {
+                        span {
+                            color: #FFE145;
+                        }
+                    }
+                }
+            }
+        }
+    
+        .progressBar {
+            display: flex;
+            position: absolute;
+            width: 100%;
+            height: 2.2%;
+            bottom: 0;
+            background-color: #1D1D1D;
+        }
+    }
+}
+
+.upperbar {
+    z-index: -1;
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 4.4%;
+    padding-left: 10%;
+    padding-right: 10%;
+    background: rgba(58, 58, 58, 0.7);
+    right: 0;
+    &_openedLeftbar {
+        max-width: calc(100vw - 31.7%);
+    }
+    .upperbar__button {
+        font-family: 'Montserrat Alternates';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        color: #F2F2F2;
+        cursor: pointer;
+        border: none;
+        background: none;
+    }
+}
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
