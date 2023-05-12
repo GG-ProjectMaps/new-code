@@ -3,6 +3,15 @@
     min-height: 100vh;
 }
 
+.container {
+    background-image: url('../public/images/map.png');
+    height: 100vh;
+    background-color: #525252;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+
 .rubricator {
     z-index: -1;
     .rubricator__button {
@@ -67,7 +76,6 @@
 }
 
 .fullLeftbar {
-    z-index: -1;
     top: 0;
     bottom: 0;
     position: fixed;
@@ -92,6 +100,7 @@
         font-family: 'Noto Sans';
         font-style: normal;
         font-weight: 400;
+        border: none;
     }
 
 
@@ -103,10 +112,6 @@
         border-right: 6px solid #000000;
         display: flex;
         justify-content: center;
-        left: -89.7%;
-        &_openedLeftbar {
-            left: 0%;
-        }
         .leftbar__statusButton {
             display: inline-block;
             position: absolute;
@@ -116,12 +121,20 @@
             height: 3.5%;
         }
         .leftbar__content {
+            background-image: url('../public/images/leftbarClosed.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: 100%;
             display: flex;
             align-items: center;
             flex-direction: column;
             width: 90.3%;
-            height: 83.2%;
+            height: 88%;
             margin-top: 15%;
+            &_isOpened {
+                display: flex;
+                background-image: none;
+            }
             .content__title {
                 font-family: 'Montserrat Alternates';
                 font-style: normal;
@@ -132,15 +145,23 @@
                 margin-top: 2%;
                 height: 13%;
                 align-items: flex-end;
-                display: flex;
+                display: none;
+                &_isOpened {
+                    display: flex;
+                }
             }
             .content__photos {
                 width: 85.3%;
                 height: 34%;
                 margin-top: 5%;
                 border: 1px solid green;
+                display: none;
+                &_isOpened {
+                    display: block;
+                }
             }
             .content__description {
+                display: none;
                 font-family: 'Noto Sans';
                 font-style: normal;
                 font-weight: 400;
@@ -149,6 +170,9 @@
                 width: 80%;
                 height: 48%;
                 margin-top: 1%;
+                &_isOpened {
+                    display: block;
+                }
                 .price {
                     height: 11.5%;
                     align-items: flex-end;
@@ -184,20 +208,17 @@
 }
 
 .upperbar {
-    z-index: -1;
     position: absolute;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 68.2%;
     height: 4.4%;
     padding-left: 10%;
     padding-right: 10%;
     background: rgba(58, 58, 58, 0.7);
     right: 0;
-    &_openedLeftbar {
-        max-width: calc(100vw - 31.7%);
-    }
+    top:0;
     .upperbar__button {
         font-family: 'Montserrat Alternates';
         font-style: normal;

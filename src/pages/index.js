@@ -37,7 +37,7 @@ export function Rubricator(props) {
 
 export default function Home() {
   return (
-    <>
+    <div className={styles.container}>
       <Head>
         <meta charset="UTF-8"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -52,7 +52,9 @@ export default function Home() {
       <main>
         <div className={styles.fullLeftbar}>
           <div className={styles.leftbar}>
-            <div className={styles.addButton}>+</div>
+            <form action='http://localhost:3000/offerForm'>
+              <button className={styles.addButton}>+</button>
+            </form>
             <Rubricator>
               <div className={styles.filter__content}>
                 <div className={styles.content__option}>кафе</div>
@@ -99,10 +101,12 @@ export default function Home() {
           <form action='http://localhost:3000/registration'>
             <button className={styles.upperbar__button}>регистрация</button>
           </form>
-          <div className={styles.upperbar__button}>вход</div>
+          <form action='http://localhost:3000/login'>
+            <button className={styles.upperbar__button}>вход</button>
+          </form>
           <div className={styles.upperbar__button}>о нас</div>
         </div>
       </main>
-    </>
+    </div>
   )
 }

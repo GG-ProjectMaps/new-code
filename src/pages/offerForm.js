@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import styles from './registration.module.scss'
+import styles from './offerForm.module.scss'
 
 export function Button(props) {
   return <button className={`${styles.button}
@@ -21,24 +21,24 @@ export default function Home() {
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </Head>
         <main>
-          <div className={styles.registrationPage}>
-            <form action='http://localhost:3000/login' className={styles.button__login}>
-              <Button caption='Вход'></Button>
+          <div className={styles.offerFormPage}>
+            <form action='http://localhost:3000/' className={styles.button__back}>
+              <Button caption='Назад'></Button>
             </form>
-            <div className={styles.registrationPage__title}>
+            <div className={styles.offerFormPage__title}>
               Underground
             </div>
-            <form action="process_registration.php" method="post">
+            <form action="process_offer.php" method="post">
               <div className={styles.form}>
-                <div className={styles.form__title}>Регистрация</div>
-                <label for="fullname">Никнейм</label>
-                <input type="text" id="fullname" name="fullname" required></input>
-                <label for="email">Почта</label>
-                <input type="email" id="email" name="email" required></input>
-                <label for="password">Пароль</label>
-                <input type="password" id="password" name="password" required></input>
-                <label for="password">Повторите пароль</label>
-                <input type="password" id="password" name="password" required></input>
+                <div className={styles.form__title}>Форма для предложения нового места</div>
+                <label for="category">Категория места</label>
+                <input type="text" id="category" name="category" required></input>
+                <label for="name">Название</label>
+                <input type="text" id="name" name="name" required></input>
+                <label for="adress">Адрес</label>
+                <input type="text" id="adress" name="adress" required></input>
+                <label for="comment">Ваш комментарий (не обязательно)</label>
+                <input type="text" id="comment" name="comment"></input>
                 <Button type="submit" caption='Отправить'></Button>
               </div>
             </form>
@@ -47,4 +47,3 @@ export default function Home() {
       </div>
     )
   }
-  

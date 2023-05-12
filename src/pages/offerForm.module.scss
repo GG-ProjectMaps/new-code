@@ -35,14 +35,14 @@
     background-position: center;
 }
 
-.registrationPage {
+.offerFormPage {
     height: 100vh;
-    .button__login {
+    .button__back {
         position: relative;
         left: 89.2%;
         top: 3%;
     }
-    .registrationPage__title {
+    .offerFormPage__title {
         user-select: none;
         position: absolute;
         width: 36.3%;
@@ -75,8 +75,10 @@
         left: 38%;
         gap: 1%;
         .form__title{
+            text-align: center;
             display: flex;
             justify-content: center;
+            align-items: center;
             font-size: 25px;
             margin-top: 5%;
             margin-bottom: 2%;
