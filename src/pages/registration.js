@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from './registration.module.scss'
+import Link from 'next/link'
 
 export function Button(props) {
   return <button className={`${styles.button}
@@ -22,9 +23,11 @@ export default function Home() {
         </Head>
         <main>
           <div className={styles.registrationPage}>
-            <form action='http://localhost:3000/login' className={styles.button__login}>
-              <Button caption='Вход'></Button>
-            </form>
+            <Link href="./login">
+              <div className={styles.button__login}>
+                <Button caption='Вход'></Button>
+              </div>            
+            </Link>
             <div className={styles.registrationPage__title}>
               Underground
             </div>

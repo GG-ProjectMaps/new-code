@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import styles from './index.module.scss'
 import React, { useState } from 'react'; 
+import Link from 'next/link';
 
 export function StatusButton(props) {
   const [isChecked, setIsChecked] = useState(false);
@@ -52,9 +53,9 @@ export default function Home() {
       <main>
         <div className={styles.fullLeftbar}>
           <div className={styles.leftbar}>
-            <form action='http://localhost:3000/offerForm'>
-              <button className={styles.addButton}>+</button>
-            </form>
+          <Link href="./offerForm">
+            <button className={styles.addButton}>+</button>
+          </Link>
             <Rubricator>
               <div className={styles.filter__content}>
                 <div className={styles.content__option}>кафе</div>
@@ -98,12 +99,12 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.upperbar}>
-          <form action='http://localhost:3000/registration'>
+          <Link href="./registration">
             <button className={styles.upperbar__button}>регистрация</button>
-          </form>
-          <form action='http://localhost:3000/login'>
+          </Link>
+          <Link href="./login">
             <button className={styles.upperbar__button}>вход</button>
-          </form>
+          </Link>
           <div className={styles.upperbar__button}>о нас</div>
         </div>
       </main>

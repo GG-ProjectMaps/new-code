@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from './offerForm.module.scss'
+import Link from 'next/link'
 
 export function Button(props) {
   return <button className={`${styles.button}
@@ -22,9 +23,11 @@ export default function Home() {
         </Head>
         <main>
           <div className={styles.offerFormPage}>
-            <form action='http://localhost:3000/' className={styles.button__back}>
-              <Button caption='Назад'></Button>
-            </form>
+            <Link href="./">
+              <div className={styles.button__back}>
+                <Button caption='Назад'></Button>
+              </div>             
+            </Link>
             <div className={styles.offerFormPage__title}>
               Underground
             </div>
