@@ -30,7 +30,7 @@
 .container {
     background-color: #3A3A3A;
     height: 100vh;
-    background-image: url('../public/images/papers.png');
+    background-image: url('/images/papers.png');
     background-size: 100% 100%;
     background-position: center;
 }
@@ -52,7 +52,7 @@
         font-weight: 400;
         font-size: 90px;
         letter-spacing: 0.05em;
-        background: url(../public/images/texture.svg), linear-gradient(180deg, #FCFCFC 29.48%, rgba(255, 255, 255, 0) 100%);
+        background: url(/images/texture.svg), linear-gradient(180deg, #FCFCFC 29.48%, rgba(255, 255, 255, 0) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -87,6 +87,12 @@
             background: none;
             height: 9%;
             margin-bottom: 3%;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            color: #F2F2F2;
+            padding-left: 2%;
         }
         label {
         }

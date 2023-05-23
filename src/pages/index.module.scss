@@ -4,13 +4,37 @@
 }
 
 .container {
-    background-image: url('../public/images/map.png');
+    background-image: url('/images/map.png');
     height: 100vh;
     background-color: #525252;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 100%;
 }
+
+.mark {
+    display: flex;
+    position: absolute;
+    cursor: pointer;
+    width: 1.7%;
+    height: 4.4%;
+    background-image: url('/images/mark.svg');
+    background-size: cover;
+    transition: all 0.3s ease; 
+    &_offTheMap {
+        background-image: url('/images/offTheMapMark.png');
+        width: 1.7%;
+        height: 4.5%;
+    }
+    &_checked {
+        margin-top: -1%;
+        margin-left: -0.5%;
+        background-image: url('/images/markSelected.png');
+        width: 3%;
+        height: 7.4%;
+    }
+}
+
 
 .rubricator {
     z-index: -1;
@@ -25,7 +49,7 @@
         background: #FFE145;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
         border-radius: 5px;
-        background-image: url('../public/images/lines.svg');
+        background-image: url('/images/lines.svg');
         background-position: center;
         background-size: cover;
         background-size: 64% 65%;
@@ -58,6 +82,12 @@
             margin-top: 4%;
             margin-left: 11.5%;
             .content__option {
+                &:hover {
+                    color: #ABABAB;
+                }
+                &_checked {
+                    text-decoration-line: underline;
+                }
                 cursor: pointer;
             }
         }
@@ -68,10 +98,10 @@
     cursor: pointer;
     width: 100%;
     height: 100%;
-    background-image: url('../public/images/statusOff.svg');
+    background-image: url('/images/statusOff.svg');
     background-size: cover;
     &_checked {
-        background-image: url('../public/images/statusOn.svg');
+        background-image: url('/images/statusOn.svg');
     }
 }
 
@@ -121,7 +151,7 @@
             height: 3.5%;
         }
         .leftbar__content {
-            background-image: url('../public/images/leftbarClosed.png');
+            background-image: url('/images/leftbarClosed.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: 100%;
@@ -131,9 +161,21 @@
             width: 90.3%;
             height: 88%;
             margin-top: 15%;
+            background-image: none;
             &_isOpened {
                 display: flex;
                 background-image: none;
+            }
+            .content__mapButton {
+                cursor: pointer;
+                display: flex;
+                background-image: url('/images/mapButton.svg');
+                background-size: cover;
+                position: absolute;
+                width: 8%;
+                height: 4.8%;
+                left: 3.5%;
+                bottom:  78%;
             }
             .content__title {
                 font-family: 'Montserrat Alternates';
@@ -145,7 +187,8 @@
                 margin-top: 2%;
                 height: 13%;
                 align-items: flex-end;
-                display: none;
+                //display: none;
+                display: flex;
                 &_isOpened {
                     display: flex;
                 }
@@ -155,13 +198,15 @@
                 height: 34%;
                 margin-top: 5%;
                 border: 1px solid green;
-                display: none;
+                //display: none;
+                display: block;
                 &_isOpened {
                     display: block;
                 }
             }
             .content__description {
-                display: none;
+                //display: none;
+                display: block;
                 font-family: 'Noto Sans';
                 font-style: normal;
                 font-weight: 400;
@@ -228,6 +273,24 @@
         cursor: pointer;
         border: none;
         background: none;
+        &:hover {
+            color: #9C9C9C;
+        }
+        &:active {
+            color: #FFED8D;
+        }
+    }
+
+    .upperbar__logo {
+        font-family: 'Sedgwick Ave Display';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        background: linear-gradient(180deg, #FCFCFC 29.48%, rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        user-select: none;
     }
 }
   
