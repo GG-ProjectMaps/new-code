@@ -3,6 +3,44 @@ import styles from './index.module.scss'
 import React, { useState } from 'react'; 
 import Link from 'next/link';
 
+const data = [
+  { id: '5', name: 'Шувакиш', top: '17%', left: '56%', rubricId: '5' },
+  { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6' },
+  { id: '4', name: 'Шалом Шанхай', top: '35%', left: '61%', rubricId: '4' },
+  { id: '5', name: 'Шурум Бурум', top: '38.8%', left: '60.2%', rubricId: '5' },
+  { id: '5', name: 'Gogo Studio', top: '45.7%', left: '59.3%', rubricId: '5' },
+  { id: '4', name: 'Самоцвет', top: '53.4%', left: '58.5%', rubricId: '4' },
+  { id: '2', name: 'Фабрика', top: '63.7%', left: '52.7%', rubricId: '2' },
+  { id: '3', name: 'Юнион', top: '55.8%', left: '62%', rubricId: '3' },
+  { id: '6', name: 'Музей ИЗО', top: '59%', left: '60%', rubricId: '6' },
+  { id: '1', name: 'Jackie', top: '67%', left: '63%', rubricId: '1' },
+  { id: '5', name: 'Urals', top: '73.5%', left: '64%', rubricId: '5' },
+  { id: '7', name: 'Сияние', top: '80%', left: '66%', rubricId: '7' },
+  { id: '6', name: 'Белая Галерея', top: '85.5%', left: '65.8%', rubricId: '6' },
+  { id: '4', name: 'Географ', top: '71.5%', left: '70.5%', rubricId: '4' },
+  { id: '7', name: 'Киноклубы', top: '59%', left: '74.5%', rubricId: '7' },
+  { id: '8', name: 'Мы тут', top: '59%', left: '75.2%', rubricId: '8' },
+  { id: '4', name: 'Ставников', top: '53%', left: '72.8%', rubricId: '4' },
+  { id: '4', name: 'New Bar', top: '48.5%', left: '62.5%', rubricId: '4' },
+  { id: '4', name: 'Syndrome Bar', top: '44.7%', left: '64%', rubricId: '4' },
+  { id: '4', name: 'Мизантроп', top: '51%', left: '65.1%', rubricId: '4' },
+  { id: '8', name: 'Музыкант 1', top: '43%', left: '67.3%', rubricId: '8' },
+  { id: '8', name: 'Музыкант 2', top: '38.5%', left: '68.5%', rubricId: '8' },
+  { id: '8', name: 'Музыкант 3', top: '34.5%', left: '67.7%', rubricId: '8' },
+  { id: '6', name: 'Провинциальные танцы', top: '33.5%', left: '71.8%', rubricId: '6' },
+  { id: '7', name: 'NEORASUM', top: '32.2%', left: '76.8%', rubricId: '7' },
+  { id: '4', name: 'Мелодия', top: '26.5%', left: '79.3%', rubricId: '4' },
+  { id: '7', name: 'Диалог', top: '23.5%', left: '76%', rubricId: '7' },
+  { id: '8', name: 'Музыкант 4', top: '16%', left: '71.3%', rubricId: '8' },
+  { id: '2', name: 'Креативный Кластер', top: '34.8%', left: '83.5%', rubricId: '2' },
+  { id: '6', name: 'Галерея ПоЛе', top: '37.8%', left: '83%', rubricId: '6'},
+  { id: '6', name: 'Титры', top: '40%', left: '81.6%', rubricId: '6'},
+  { id: '6', name: 'Театр Игра', top: '8%', left: '81.7%', type: 'offTheMap', rubricId: '6'},
+  { id: '7', name: 'Касабланка', top: '16%', left: '93.1%', type: 'offTheMap', rubricId: '7'},
+  { id: '6', name: 'ЦСД Саманта', top: '39.5%', left: '92.4%', type: 'offTheMap', rubricId: '6'},
+  { id: '6', name: 'Подмостки', top: '92.5%', left: '80%', type: 'offTheMap', rubricId: '6'}
+]
+
 export function StatusButton(props) {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -19,22 +57,26 @@ export function StatusButton(props) {
 
 export function Mark(props) {
   const [isChecked, setIsChecked] = useState(false);
+  const rubricIdNumber = props.rubricId ? parseInt(props.rubricId) : undefined;
 
   const handleClick = () => {
     setIsChecked(!isChecked);
   };
 
-  return <div className={`
-            ${styles.mark}
-            ${isChecked && styles.mark_checked}
-            ${(props.type==='offTheMap') && styles.mark_offTheMap}
-          `}
-          style={{ top: props.top, left: props.left }}
-          onClick={handleClick}></div>
+  return (props.selectedRubric === null || props.selectedRubric === rubricIdNumber) || rubricIdNumber === undefined ? (
+    <div
+      className={`${styles.mark} ${isChecked && styles.mark_checked} ${
+        props.type === "offTheMap" && styles.mark_offTheMap
+      }`}
+      style={{ top: props.top, left: props.left }}
+      onClick={handleClick}
+    ></div>
+  ) : null;
 }
 
 export function Rubricator(props) {
   const [isClicked, setIsClicked] = useState(false);
+  const [selectedRubric, setSelectedRubric] = useState(null);
   const [options, setOptions] = useState([
     { name: "кафе", isChecked: false },
     { name: "пространства", isChecked: false },
@@ -50,10 +92,16 @@ export function Rubricator(props) {
     const newOptions = [...options];
     newOptions[index].isChecked = !newOptions[index].isChecked;
     setOptions(newOptions);
+    if (newOptions[index].isChecked) {
+      setSelectedRubric(index+1);
+    } else {
+      setSelectedRubric(null);
+    }
   };
   const handleButtonClick = () => {
     setIsClicked(!isClicked);
   };
+
 
   return <div className={styles.rubricator}>
             <div className={styles.rubricator__button} 
@@ -75,6 +123,18 @@ export function Rubricator(props) {
                 ))}
               </div>
             </div>
+            {props.data.map((item) => (
+              <Mark
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                top={item.top}
+                left={item.left}
+                type={item.type}
+                rubricId={item.rubricId}
+                selectedRubric={selectedRubric}
+              ></Mark>
+            ))}
           </div>
 }
 
@@ -96,58 +156,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
       </Head>
       <main>
-        <Mark id="Шувакиш" top='17%' left="56%"></Mark>
-        <Mark id="Ельцин Центр" top='18%' left="57%"></Mark>
-        <Mark id="Шалом Шанхай" top='35%' left="61%"></Mark>
-        <Mark id="Шурум Бурум" top='38.8%' left="60.2%"></Mark>
-        <Mark id="Gogo Studio" top='45.7%' left="59.3%"></Mark>
-        <Mark id="Самоцвет" top='53.4%' left="58.5%"></Mark>
-        <Mark id="Фабрика" top='63.7%' left="52.7%"></Mark>
-        <Mark id="Юнион" top='55.8%' left="62%"></Mark>
-        <Mark id="Музей ИЗО" top='59%' left="60%"></Mark>
-        <Mark id="Jackie" top='67%' left="63%"></Mark>
-        <Mark id="Urals" top='73.5%' left="64%"></Mark>
-        <Mark id="Сияние" top='80%' left="66%"></Mark>
-        <Mark id="Белая Галерея" top='85.5%' left="65.8%"></Mark>
-        <Mark id="Географ" top='71.5%' left="70.5%"></Mark>
-        <Mark id="Киноклубы" top='59%' left="74.5%"></Mark>
-        <Mark id="Мы тут" top='59%' left="75.2%"></Mark>
-        <Mark id="Ставников" top='53%' left="72.8%"></Mark>
-        <Mark id="New Bar" top='48.5%' left="62.5%"></Mark>
-        <Mark id="Syndrome Bar" top='44.7%' left="64%"></Mark>
-        <Mark id="Мизантроп" top='51%' left="65.1%"></Mark>
-        <Mark id="Музыкант 1" top='43%' left="67.3%"></Mark>
-        <Mark id="Музыкант 2" top='38.5%' left="68.5%"></Mark>
-        <Mark id="Музыкант 3" top='34.5%' left="67.7%"></Mark>
-        <Mark id="Провинциальные танцы" top='33.5%' left="71.8%"></Mark>
-        <Mark id="NEORASUM" top='32.2%' left="76.8%"></Mark>
-        <Mark id="Мелодия" top='26.5%' left="79.3%"></Mark>
-        <Mark id="Диалог" top='23.5%' left="76%"></Mark>
-        <Mark id="Музыкант 4" top='16%' left="71.3%"></Mark>
-        <Mark id="Креативный Кластер" top='34.8%' left="83.5%"></Mark>
-        <Mark id="Галерея ПоЛе" top='37.8%' left="83%"></Mark>
-        <Mark id="Титры" top='40%' left="81.6%"></Mark>
-        <Mark id="Театр Игра" top='8%' left="81.7%" type='offTheMap'></Mark>
-        <Mark id="Касабланка" top='16%' left="93.1%" type='offTheMap'></Mark>
-        <Mark id="ЦСД Саманта" top='39.5%' left="92.4%" type='offTheMap'></Mark>
-        <Mark id="Подмостки" top='92.5%' left="80%" type='offTheMap'></Mark>
+        <Rubricator data={data}></Rubricator>
         <div className={styles.fullLeftbar}>
           <div className={styles.leftbar}>
-          <Link href="./offerForm">
-            <button className={styles.addButton}>+</button>
-          </Link>
-            <Rubricator>
-              {/* <div className={styles.filter__content}>
-                <div className={styles.content__option} onClick={handleOptionClick}>кафе</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>пространства</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>клубы</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>бары</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>магазины</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>театры и музеи</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>киноклубы</div>
-                <div className={styles.content__option} onClick={handleOptionClick}>точки музыкантов</div>
-              </div> */}
-            </Rubricator>
+            <Link href="./offerForm">
+              <button className={styles.addButton}>+</button>
+            </Link>
+            {/* <Rubricator data={data}></Rubricator> */}
             <div className={styles.leftbar__statusButton}>
               <StatusButton></StatusButton>
             </div>
