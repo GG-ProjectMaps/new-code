@@ -63,7 +63,7 @@ export function Mark(props) {
     setIsChecked(!isChecked);
   };
 
-  return (props.selectedRubric === null || props.selectedRubric === rubricIdNumber) || rubricIdNumber === undefined ? (
+  return props.selectedRubrics.includes(rubricIdNumber) || props.selectedRubrics.length === 0 ? (
     <div
       className={`${styles.mark} ${isChecked && styles.mark_checked} ${
         props.type === "offTheMap" && styles.mark_offTheMap
@@ -76,7 +76,7 @@ export function Mark(props) {
 
 export function Rubricator(props) {
   const [isClicked, setIsClicked] = useState(false);
-  const [selectedRubric, setSelectedRubric] = useState(null);
+  const [selectedRubrics, setSelectedRubrics] = useState([]);
   const [options, setOptions] = useState([
     { name: "кафе", isChecked: false },
     { name: "пространства", isChecked: false },
@@ -92,11 +92,15 @@ export function Rubricator(props) {
     const newOptions = [...options];
     newOptions[index].isChecked = !newOptions[index].isChecked;
     setOptions(newOptions);
+  
+    const newSelectedRubrics = [...selectedRubrics];
     if (newOptions[index].isChecked) {
-      setSelectedRubric(index+1);
+      newSelectedRubrics.push(index + 1);
     } else {
-      setSelectedRubric(null);
+      const indexToRemove = newSelectedRubrics.indexOf(index + 1);
+      newSelectedRubrics.splice(indexToRemove, 1);
     }
+    setSelectedRubrics(newSelectedRubrics);
   };
   const handleButtonClick = () => {
     setIsClicked(!isClicked);
@@ -132,7 +136,7 @@ export function Rubricator(props) {
                 left={item.left}
                 type={item.type}
                 rubricId={item.rubricId}
-                selectedRubric={selectedRubric}
+                selectedRubrics={selectedRubrics}
               ></Mark>
             ))}
           </div>
@@ -162,7 +166,6 @@ export default function Home() {
             <Link href="./offerForm">
               <button className={styles.addButton}>+</button>
             </Link>
-            {/* <Rubricator data={data}></Rubricator> */}
             <div className={styles.leftbar__statusButton}>
               <StatusButton></StatusButton>
             </div>
