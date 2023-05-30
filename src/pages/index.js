@@ -1,11 +1,15 @@
 import Head from 'next/head'
 import styles from './index.module.scss'
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import Link from 'next/link';
 
+const leftbars = [
+  { id: '1', name: 'Шувакиш', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false},
+  { id: '2', name: 'Ельцин Центр', price: '200р.', description: 'Описание Ельцин Центр', address: 'ул. Ельцина, 2', isOpened: false }
+];//
+
 const data = [
-  { id: '5', name: 'Шувакиш', top: '17%', left: '56%', rubricId: '5' },
-  { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6' },
+  { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false },
   { id: '4', name: 'Шалом Шанхай', top: '35%', left: '61%', rubricId: '4' },
   { id: '5', name: 'Шурум Бурум', top: '38.8%', left: '60.2%', rubricId: '5' },
   { id: '5', name: 'Gogo Studio', top: '45.7%', left: '59.3%', rubricId: '5' },
@@ -38,8 +42,73 @@ const data = [
   { id: '6', name: 'Театр Игра', top: '8%', left: '81.7%', type: 'offTheMap', rubricId: '6'},
   { id: '7', name: 'Касабланка', top: '16%', left: '93.1%', type: 'offTheMap', rubricId: '7'},
   { id: '6', name: 'ЦСД Саманта', top: '39.5%', left: '92.4%', type: 'offTheMap', rubricId: '6'},
-  { id: '6', name: 'Подмостки', top: '92.5%', left: '80%', type: 'offTheMap', rubricId: '6'}
+  { id: '6', name: 'Подмостки', top: '92.5%', left: '80%', type: 'offTheMap', rubricId: '6'},
+  { id: '5', name: 'Шувакиш', top: '17%', left: '56%', rubricId: '5', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false }
 ]
+
+export function LeftBar(props) {
+  const { price, description, address, name, isOpened } = props;
+  //const [isOpened, setIsOpened] = useState(false);
+
+  return (
+    <div className={`${styles.fullLeftbar} ${isOpened && styles.fullLeftbar_isOpened}`}>
+      <div className={`${styles.leftbar} ${isOpened && styles.leftbar_isOpened}`}>
+        <Link href="./offerForm">
+          <button className={styles.addButton}>+</button>
+        </Link>
+        <div className={styles.leftbar__statusButton}>
+          <StatusButton></StatusButton>
+        </div>
+        <div className={`${styles.leftbar__content} ${isOpened && styles.leftbar__content_isOpened}`}>
+          <div className={`${styles.content__mapButton} ${isOpened && styles.content__mapButton_isOpened}`} ></div>
+          <div className={`${styles.content__title} ${isOpened && styles.content__title_isOpened}`}>{name}</div>
+          <div className={`${styles.content__photos} ${isOpened && styles.content__photos_isOpened}`}></div>
+          <div className={`${styles.content__description} ${isOpened && styles.content__description_isOpened}`}>
+            <div className={styles.price}>{price}</div>
+            <div className={styles.description}>
+              <div className={styles.title}>Описание</div>
+              <div className={styles.text}>{description}</div>
+              <div className={styles.adress}>
+                <span>Адрес:</span> {address}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.progressBar}></div>
+      </div>
+    </div>
+  );
+}
+
+// export function MakeLeftbar(props) {  
+//   return (
+//     <div>
+//       {leftbars.map(leftbar => (
+//         <LeftBar
+//           key={leftbar.id}
+//           name={leftbar.name}
+//           price={leftbar.price}
+//           description={leftbar.description}
+//           address={leftbar.address}
+//         ></LeftBar>
+//       ))}
+//     </div>
+//   );
+// }
+export function MakeLeftbar(props) {
+  const { isOpened } = props; 
+  const leftBars = data.map((mark) => (
+    <LeftBar
+      key={mark.id}
+      name={mark.name}
+      description={mark.description}
+      address={mark.address}
+      price={mark.price}
+      isOpened={isOpened[mark.name]}
+    />
+  ));
+  return <>{leftBars}</>;
+}
 
 export function StatusButton(props) {
   const [isChecked, setIsChecked] = useState(false);
@@ -59,8 +128,10 @@ export function Mark(props) {
   const [isChecked, setIsChecked] = useState(false);
   const rubricIdNumber = props.rubricId ? parseInt(props.rubricId) : undefined;
 
+  
   const handleClick = () => {
     setIsChecked(!isChecked);
+    props.onMarkClick(props.name); 
   };
 
   return props.selectedRubrics.includes(rubricIdNumber) || props.selectedRubrics.length === 0 ? (
@@ -75,6 +146,7 @@ export function Mark(props) {
 }
 
 export function Rubricator(props) {
+  const [isOpened, setIsOpened] = useState({});
   const [isClicked, setIsClicked] = useState(false);
   const [selectedRubrics, setSelectedRubrics] = useState([]);
   const [options, setOptions] = useState([
@@ -106,6 +178,14 @@ export function Rubricator(props) {
     setIsClicked(!isClicked);
   };
 
+  const handleMarkClick = (name) => {
+    setIsOpened((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
+  
 
   return <div className={styles.rubricator}>
             <div className={styles.rubricator__button} 
@@ -127,6 +207,7 @@ export function Rubricator(props) {
                 ))}
               </div>
             </div>
+            <MakeLeftbar data={data} isOpened={isOpened}></MakeLeftbar>
             {props.data.map((item) => (
               <Mark
                 key={item.id}
@@ -137,6 +218,8 @@ export function Rubricator(props) {
                 type={item.type}
                 rubricId={item.rubricId}
                 selectedRubrics={selectedRubrics}
+                isOpened={isOpened[item.name]}
+                onMarkClick={handleMarkClick}
               ></Mark>
             ))}
           </div>
@@ -161,7 +244,9 @@ export default function Home() {
       </Head>
       <main>
         <Rubricator data={data}></Rubricator>
-        <div className={styles.fullLeftbar}>
+        {/* <MakeLeftbar data={data}></MakeLeftbar> */}
+        {/* <LeftBar></LeftBar> */}
+        {/* <div className={styles.fullLeftbar}>
           <div className={styles.leftbar}>
             <Link href="./offerForm">
               <button className={styles.addButton}>+</button>
@@ -196,7 +281,7 @@ export default function Home() {
             </div>
             <div className={styles.progressBar}></div>
           </div>
-        </div>
+        </div> */}
         <div className={styles.upperbar}>
           <Link href="./registration">
             <button className={styles.upperbar__button}>регистрация</button>
