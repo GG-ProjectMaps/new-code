@@ -3,16 +3,11 @@ import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'; 
 import Link from 'next/link';
 
-const leftbars = [
-  { id: '1', name: 'Шувакиш', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false},
-  { id: '2', name: 'Ельцин Центр', price: '200р.', description: 'Описание Ельцин Центр', address: 'ул. Ельцина, 2', isOpened: false }
-];//
-
 const data = [
   { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false },
   { id: '4', name: 'Шалом Шанхай', top: '35%', left: '61%', rubricId: '4' },
   { id: '5', name: 'Шурум Бурум', top: '38.8%', left: '60.2%', rubricId: '5' },
-  { id: '5', name: 'Gogo Studio', top: '45.7%', left: '59.3%', rubricId: '5' },
+  { id: '5', name: 'Gogo Studio', top: '45.7%', left: '59.3%', rubricId: '5', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false  },
   { id: '4', name: 'Самоцвет', top: '53.4%', left: '58.5%', rubricId: '4' },
   { id: '2', name: 'Фабрика', top: '63.7%', left: '52.7%', rubricId: '2' },
   { id: '3', name: 'Юнион', top: '55.8%', left: '62%', rubricId: '3' },
@@ -48,7 +43,6 @@ const data = [
 
 export function LeftBar(props) {
   const { price, description, address, name, isOpened } = props;
-  //const [isOpened, setIsOpened] = useState(false);
 
   return (
     <div className={`${styles.fullLeftbar} ${isOpened && styles.fullLeftbar_isOpened}`}>
@@ -80,21 +74,6 @@ export function LeftBar(props) {
   );
 }
 
-// export function MakeLeftbar(props) {  
-//   return (
-//     <div>
-//       {leftbars.map(leftbar => (
-//         <LeftBar
-//           key={leftbar.id}
-//           name={leftbar.name}
-//           price={leftbar.price}
-//           description={leftbar.description}
-//           address={leftbar.address}
-//         ></LeftBar>
-//       ))}
-//     </div>
-//   );
-// }
 export function MakeLeftbar(props) {
   const { isOpened } = props; 
   const leftBars = data.map((mark) => (
@@ -127,12 +106,17 @@ export function StatusButton(props) {
 export function Mark(props) {
   const [isChecked, setIsChecked] = useState(false);
   const rubricIdNumber = props.rubricId ? parseInt(props.rubricId) : undefined;
-
   
   const handleClick = () => {
     setIsChecked(!isChecked);
     props.onMarkClick(props.name); 
   };
+
+  useEffect(() => {
+    if (props.lastSelectedMark && props.lastSelectedMark !== props.name) {
+      setIsChecked(false);
+    }
+  }, [props.lastSelectedMark, props.name]);
 
   return props.selectedRubrics.includes(rubricIdNumber) || props.selectedRubrics.length === 0 ? (
     <div
@@ -178,12 +162,26 @@ export function Rubricator(props) {
     setIsClicked(!isClicked);
   };
 
+  const [lastSelectedMark, setLastSelectedMark] = useState(null);
+
   const handleMarkClick = (name) => {
     setIsOpened((prevState) => ({
       ...prevState,
       [name]: !prevState[name],
     }));
+
+    if (lastSelectedMark && lastSelectedMark !== name) {
+      setIsOpened((prevState) => ({
+        ...prevState,
+        [lastSelectedMark]: false,
+      }));
+    }
+
+    setLastSelectedMark(name);
   };
+
+  
+
 
   
 
@@ -220,6 +218,10 @@ export function Rubricator(props) {
                 selectedRubrics={selectedRubrics}
                 isOpened={isOpened[item.name]}
                 onMarkClick={handleMarkClick}
+                isChecked={item.isChecked}
+                setIsChecked={item.setIsChecked}
+                lastSelectedMark={lastSelectedMark}
+                //isChecked={false}
               ></Mark>
             ))}
           </div>

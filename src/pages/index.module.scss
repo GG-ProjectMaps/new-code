@@ -216,6 +216,7 @@
                 display: none;
                 //display: block;
                 &_isOpened {
+                    z-index: 1;
                     display: block;
                 }
             }
