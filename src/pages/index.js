@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const data = [
-  { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false },
+  { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false, map: <iframe src="https://yandex.ru/map-widget/v1/?um=constructor:bb23d1b482a0a14541a4df3f45563ab0e05a8c0dace906451c43bbb2f392797a&amp;source=constructor" 
+  width="100%" height="100%" frameborder="0"></iframe>},
   { id: '4', name: 'Шалом Шанхай', top: '35%', left: '61%', rubricId: '4' },
   { id: '5', name: 'Шурум Бурум', top: '38.8%', left: '60.2%', rubricId: '5' },
   { id: '5', name: 'Gogo Studio', top: '45.7%', left: '59.3%', rubricId: '5', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false  },
@@ -41,8 +42,16 @@ const data = [
   { id: '5', name: 'Шувакиш', top: '17%', left: '56%', rubricId: '5', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false }
 ]
 
+
+
 export function LeftBar(props) {
-  const { price, description, address, name, isOpened } = props;
+  const { price, description, address, name, isOpened, map, onVisited } = props;
+
+  const [isMapOpened, setIsMapOpened] = useState(false);
+
+  const handleClickMapButton = () => {
+    setIsMapOpened(!isMapOpened);
+  };
 
   return (
     <div className={`${styles.fullLeftbar} ${isOpened && styles.fullLeftbar_isOpened}`}>
@@ -50,13 +59,19 @@ export function LeftBar(props) {
         <Link href="./offerForm">
           <button className={styles.addButton}>+</button>
         </Link>
-        <div className={styles.leftbar__statusButton}>
+        <div className={`${styles.leftbar__statusButton} ${isOpened && styles.leftbar__statusButton_isOpened}`}>
           <StatusButton></StatusButton>
         </div>
         <div className={`${styles.leftbar__content} ${isOpened && styles.leftbar__content_isOpened}`}>
-          <div className={`${styles.content__mapButton} ${isOpened && styles.content__mapButton_isOpened}`} ></div>
+          <div className={`${styles.content__mapButton} ${isOpened && styles.content__mapButton_isOpened}`} onClick={handleClickMapButton}></div>
           <div className={`${styles.content__title} ${isOpened && styles.content__title_isOpened}`}>{name}</div>
-          <div className={`${styles.content__photos} ${isOpened && styles.content__photos_isOpened}`}></div>
+          <div className={`${styles.content__photos} ${isOpened && styles.content__photos_isOpened}`}>
+            {isMapOpened && (
+              <div className={styles.content__map}>
+                {map}
+              </div>
+            )}
+          </div>
           <div className={`${styles.content__description} ${isOpened && styles.content__description_isOpened}`}>
             <div className={styles.price}>{price}</div>
             <div className={styles.description}>
@@ -68,7 +83,7 @@ export function LeftBar(props) {
             </div>
           </div>
         </div>
-        <div className={styles.progressBar}></div>
+        {/* <div className={styles.progressBar}></div> */}
       </div>
     </div>
   );
@@ -84,6 +99,7 @@ export function MakeLeftbar(props) {
       address={mark.address}
       price={mark.price}
       isOpened={isOpened[mark.name]}
+      map={mark.map}
     />
   ));
   return <>{leftBars}</>;
@@ -217,6 +233,7 @@ export function Rubricator(props) {
                 rubricId={item.rubricId}
                 selectedRubrics={selectedRubrics}
                 isOpened={isOpened[item.name]}
+                map={item.map}
                 onMarkClick={handleMarkClick}
                 isChecked={item.isChecked}
                 setIsChecked={item.setIsChecked}
@@ -227,6 +244,25 @@ export function Rubricator(props) {
           </div>
 }
 
+// export function ProgressBar() {
+
+//   const [visitedCount, setVisitedCount] = useState(0);
+
+//   useEffect(() => {
+//     setVisitedCount(data.filter(item => item.isChecked).length);
+//   }, [data]);
+
+//   const progress = visitedCount / data.length;
+
+//   return (
+//     <div className={styles.progressBar}>
+//       <div className={styles.progressBar__progress} style={{ width: `${progress * 100}%`, 
+//       background: `linear-gradient(90deg, rgba(228, 135, 25, 0.2) 0%, rgba(227, 182, 22, 0) 100%), 
+//       ${progress > 0 ? '#FFE145' : 'transparent'}`, borderRadius: `${progress > 0 ? '0px 30px 30px 0px' : '0 px'}` }}>
+//       </div>
+//     </div>
+//   );
+// }
 
 export default function Home() {
   return (
@@ -246,44 +282,11 @@ export default function Home() {
       </Head>
       <main>
         <Rubricator data={data}></Rubricator>
-        {/* <MakeLeftbar data={data}></MakeLeftbar> */}
-        {/* <LeftBar></LeftBar> */}
-        {/* <div className={styles.fullLeftbar}>
-          <div className={styles.leftbar}>
-            <Link href="./offerForm">
-              <button className={styles.addButton}>+</button>
-            </Link>
-            <div className={styles.leftbar__statusButton}>
-              <StatusButton></StatusButton>
-            </div>
-            <div className={styles.leftbar__content}>
-              <div className={styles.content__mapButton}></div>
-              <div className={styles.content__title}>
-                Бар "Самоцвет"
-              </div>
-              <div className={styles.content__photos}>
-                
-              </div>
-              <div className={styles.content__description}>
-                <div className={styles.price}>
-                  Цены от 500 рублей
-                </div>
-                <div className={styles.description}>
-                  <div className={styles.title}>
-                    Описание
-                  </div>
-                  <div className={styles.text}>
-                    Бар на каждый день в двухэтажном особняке XIX века в центре Екатеринбурга с большим выбором напитков: от пива и вина до коктейлей и дистиллятов.
-                  </div>
-                  <div className={styles.adress}>
-                    <span>Адрес:</span> ул. Мира, 32
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.progressBar}></div>
-          </div>
-        </div> */}
+        <div className={styles.progressBar}>
+          <div className={styles.progressBar__progress}></div>
+        </div>
+        {/* <ProgressBar visitedCount={visitedCount}></ProgressBar> */}
+        {/* <ProgressBar data={data}></ProgressBar> */}
         <div className={styles.upperbar}>
           <Link href="./registration">
             <button className={styles.upperbar__button}>регистрация</button>

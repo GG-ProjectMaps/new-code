@@ -37,10 +37,10 @@
 
 
 .rubricator {
-    z-index: -1;
+    z-index: 2;
     .rubricator__button {
         cursor: pointer;
-        z-index: 1;
+        z-index: 2;
         display: flex;
         position: absolute;
         //left: 101.1%;
@@ -60,7 +60,7 @@
         background-repeat: no-repeat;
     }
     .rubricator__filter {
-        z-index: 1;
+        z-index: 2;
         font-family: 'Noto Sans';
         font-style: normal;
         font-weight: 400;
@@ -95,6 +95,7 @@
                     color: #FFED8D;
                 }
                 cursor: pointer;
+                //user-select: none;
             }
         }
     }
@@ -110,6 +111,18 @@
         background-image: url('/images/statusOn.svg');
     }
 }
+.progressBar {
+    z-index: 1;
+    display: flex;
+    position: absolute;
+    width: 31.36%;
+    height: 2.2%;
+    bottom: 0;
+    background-color: #1D1D1D;
+    .progressBar__progress {
+        border: 1px solid red;;
+    }
+}
 
 .fullLeftbar {
     top: 0;
@@ -122,6 +135,7 @@
     }
     .addButton {
         cursor: pointer;
+        user-select: none;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -151,30 +165,34 @@
         border-right: 6px solid #000000;
         display: flex;
         justify-content: center;
+        background-position: 60% 72%;
+        background-image: url('/images/leftbarClosed.png');
+        background-size: 80%;
+        background-repeat: no-repeat;
+        &_isOpened {
+            background-image: none;
+        }
         .leftbar__statusButton {
-            display: inline-block;
+            display: none;
             position: absolute;
             left: 83.5%;
             top: 6.4%;
             width: 6.5%;
-            height: 3.5%;
+            height: 3.7%;
+            &_isOpened {
+                display: inline-block;
+            }
         }
         .leftbar__content {
-            background-image: url('/images/leftbarClosed.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: 100%;
             display: flex;
             align-items: center;
             flex-direction: column;
             width: 90.3%;
             height: 88%;
             margin-top: 15%;
-            //background-image: none;
             &_isOpened {
                 z-index: 1;
                 display: flex;
-                background-image: none;
             }
             .content__mapButton {
                 cursor: pointer;
@@ -202,7 +220,6 @@
                 height: 13%;
                 align-items: flex-end;
                 display: none;
-                //display: flex;
                 &_isOpened {
                     z-index: 1;
                     display: flex;
@@ -214,7 +231,11 @@
                 margin-top: 5%;
                 border: 1px solid green;
                 display: none;
-                //display: block;
+                .content__map {
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2;
+                }
                 &_isOpened {
                     z-index: 1;
                     display: block;
@@ -222,7 +243,6 @@
             }
             .content__description {
                 display: none;
-                //display: block;
                 font-family: 'Noto Sans';
                 font-style: normal;
                 font-weight: 400;
@@ -258,14 +278,14 @@
             }
         }
     
-        .progressBar {
-            display: flex;
-            position: absolute;
-            width: 100%;
-            height: 2.2%;
-            bottom: 0;
-            background-color: #1D1D1D;
-        }
+        // .progressBar {
+        //     display: flex;
+        //     position: absolute;
+        //     width: 100%;
+        //     height: 2.2%;
+        //     bottom: 0;
+        //     background-color: #1D1D1D;
+        // }
     }
 }
 
@@ -282,6 +302,7 @@
     right: 0;
     top:0;
     .upperbar__button {
+        user-select: none;
         font-family: 'Montserrat Alternates';
         font-style: normal;
         font-weight: 500;
