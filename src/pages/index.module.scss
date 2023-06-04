@@ -12,6 +12,57 @@
     background-position: 100%;
 }
 
+.slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    .slider__slides {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            user-select: none;
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+    .slider__dots {
+        position: absolute;
+        bottom: 2%;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+      .slider__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.7);
+        margin: 0 6px;
+        cursor: pointer;
+        transition: background-color 0.5s ease-in-out;
+        &.active {
+          background-color: #333;
+        }
+      }
+    }
+  }
+
 .mark {
     display: flex;
     position: absolute;
@@ -32,6 +83,9 @@
         background-image: url('/images/markSelected.png');
         width: 3%;
         height: 7.4%;
+    }
+    &_visited {
+        background-image: url('/images/markVisited.svg');
     }
 }
 
@@ -70,10 +124,11 @@
         display: none;
         width: 13%;
         height: 34.9%;
-        left: 31.3%;
+        left: 31.44%;
         top: 20.5%;
         background: #3A3A3A;
         border: 6px solid #000000;
+        border-left: 5px solid black;
         border-radius: 0px 10px 10px 0px;
         &_clicked {
             display: flex;
@@ -86,6 +141,7 @@
             height: 96.5%;
             margin-top: 2.8%;
             margin-left: 4.5%;
+            user-select: none;
             .content__option {
                 &:hover {
                     color: #ABABAB;
@@ -95,7 +151,6 @@
                     color: #FFED8D;
                 }
                 cursor: pointer;
-                //user-select: none;
             }
         }
     }
@@ -120,7 +175,11 @@
     bottom: 0;
     background-color: #1D1D1D;
     .progressBar__progress {
-        border: 1px solid red;;
+        transition: all 0.3s ease; 
+        background: linear-gradient(90deg, rgba(228, 135, 25, 0.2) 0%, rgba(227, 182, 22, 0) 100%), #FFE145;
+        border-radius: 0px 30px 30px 0px;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -229,7 +288,6 @@
                 width: 85.3%;
                 height: 34%;
                 margin-top: 5%;
-                border: 1px solid green;
                 display: none;
                 .content__map {
                     width: 100%;

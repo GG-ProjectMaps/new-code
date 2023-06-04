@@ -6,7 +6,7 @@ import Link from 'next/link';
 const data = [
   { id: '6', name: 'Ельцин Центр', top: '18%', left: '57%', rubricId: '6', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false, map: <iframe src="https://yandex.ru/map-widget/v1/?um=constructor:bb23d1b482a0a14541a4df3f45563ab0e05a8c0dace906451c43bbb2f392797a&amp;source=constructor" 
   width="100%" height="100%" frameborder="0"></iframe>},
-  { id: '4', name: 'Шалом Шанхай', top: '35%', left: '61%', rubricId: '4' },
+  { id: '4', name: 'Шалом Шанхай', top: '35%', left: '61%', rubricId: '4'},
   { id: '5', name: 'Шурум Бурум', top: '38.8%', left: '60.2%', rubricId: '5' },
   { id: '5', name: 'Gogo Studio', top: '45.7%', left: '59.3%', rubricId: '5', price: '100р.', description: 'Описание Шувакиш', address: 'ул. Шувакиша, 1', isOpened: false  },
   { id: '4', name: 'Самоцвет', top: '53.4%', left: '58.5%', rubricId: '4' },
@@ -45,9 +45,19 @@ const data = [
 
 
 export function LeftBar(props) {
-  const { price, description, address, name, isOpened, map, onVisited } = props;
-
+  const { price, description, address, name, isOpened, map, setVisitedMarks} = props;
   const [isMapOpened, setIsMapOpened] = useState(false);
+  const [isVisited, setIsVisited] = useState(false);
+  const handleClick = () => {
+    setIsVisited(!isVisited);
+    setVisitedMarks(prevVisitedMarks => {
+      if (isVisited) {
+        return prevVisitedMarks.filter(markName => markName !== name);
+      } else {
+        return [...prevVisitedMarks, name];
+      }
+    });
+  };
 
   const handleClickMapButton = () => {
     setIsMapOpened(!isMapOpened);
@@ -60,17 +70,20 @@ export function LeftBar(props) {
           <button className={styles.addButton}>+</button>
         </Link>
         <div className={`${styles.leftbar__statusButton} ${isOpened && styles.leftbar__statusButton_isOpened}`}>
-          <StatusButton></StatusButton>
+          <StatusButton isVisited={isVisited}
+      onClick={handleClick}></StatusButton>
         </div>
         <div className={`${styles.leftbar__content} ${isOpened && styles.leftbar__content_isOpened}`}>
           <div className={`${styles.content__mapButton} ${isOpened && styles.content__mapButton_isOpened}`} onClick={handleClickMapButton}></div>
           <div className={`${styles.content__title} ${isOpened && styles.content__title_isOpened}`}>{name}</div>
           <div className={`${styles.content__photos} ${isOpened && styles.content__photos_isOpened}`}>
-            {isMapOpened && (
-              <div className={styles.content__map}>
-                {map}
-              </div>
-            )}
+            {isMapOpened ? (
+                <div className={styles.content__map}>
+                  {map}
+                </div>
+              ) : (
+                <Slider></Slider>
+              )}
           </div>
           <div className={`${styles.content__description} ${isOpened && styles.content__description_isOpened}`}>
             <div className={styles.price}>{price}</div>
@@ -90,7 +103,8 @@ export function LeftBar(props) {
 }
 
 export function MakeLeftbar(props) {
-  const { isOpened } = props; 
+  const { isOpened, setVisitedMarks } = props; 
+
   const leftBars = data.map((mark) => (
     <LeftBar
       key={mark.id}
@@ -100,29 +114,43 @@ export function MakeLeftbar(props) {
       price={mark.price}
       isOpened={isOpened[mark.name]}
       map={mark.map}
+      setVisitedMarks={setVisitedMarks}
     />
   ));
   return <>{leftBars}</>;
 }
 
 export function StatusButton(props) {
-  const [isChecked, setIsChecked] = useState(false);
+  // const [isVisited, setIsVisited] = useState(false);
 
-  const handleClick = () => {
-    setIsChecked(!isChecked);
-  };
+  // const handleClick = () => {
+  //   setIsVisited(!isVisited);
+  // };
+  const { isVisited, onClick } = props;
 
   return <div className={`
             ${styles.statusButton}
-            ${isChecked && styles.statusButton_checked}
+            ${isVisited && styles.statusButton_checked}
           `}
-          onClick={handleClick}></div>
+          onClick={onClick}></div>
+}
+
+export function ProgressBar(props) {
+  const { visitedMarks, totalMarks } = props;
+  const percentComplete = (visitedMarks.length / totalMarks) * 100;
+
+  return (
+    <div className={styles.progressBar}>
+      <div className={styles.progressBar__progress}
+          style={{ width: percentComplete + "%" }}>
+          </div>
+    </div>
+  );
 }
 
 export function Mark(props) {
   const [isChecked, setIsChecked] = useState(false);
   const rubricIdNumber = props.rubricId ? parseInt(props.rubricId) : undefined;
-  
   const handleClick = () => {
     setIsChecked(!isChecked);
     props.onMarkClick(props.name); 
@@ -134,11 +162,15 @@ export function Mark(props) {
     }
   }, [props.lastSelectedMark, props.name]);
 
+  const visited = props.visitedMarks.includes(props.name);
+
   return props.selectedRubrics.includes(rubricIdNumber) || props.selectedRubrics.length === 0 ? (
     <div
-      className={`${styles.mark} ${isChecked && styles.mark_checked} ${
-        props.type === "offTheMap" && styles.mark_offTheMap
-      }`}
+    className={`${styles.mark} ${
+      isChecked && styles.mark_checked
+    } ${!isChecked && visited && styles.mark_visited} ${
+      props.type === "offTheMap" && styles.mark_offTheMap
+    }`}
       style={{ top: props.top, left: props.left }}
       onClick={handleClick}
     ></div>
@@ -146,6 +178,9 @@ export function Mark(props) {
 }
 
 export function Rubricator(props) {
+
+  const [visitedMarks, setVisitedMarks] = useState([]);
+
   const [isOpened, setIsOpened] = useState({});
   const [isClicked, setIsClicked] = useState(false);
   const [selectedRubrics, setSelectedRubrics] = useState([]);
@@ -196,11 +231,6 @@ export function Rubricator(props) {
     setLastSelectedMark(name);
   };
 
-  
-
-
-  
-
   return <div className={styles.rubricator}>
             <div className={styles.rubricator__button} 
               onClick={handleButtonClick}></div>
@@ -221,7 +251,7 @@ export function Rubricator(props) {
                 ))}
               </div>
             </div>
-            <MakeLeftbar data={data} isOpened={isOpened}></MakeLeftbar>
+            <MakeLeftbar data={data} isOpened={isOpened} setVisitedMarks={setVisitedMarks}></MakeLeftbar>
             {props.data.map((item) => (
               <Mark
                 key={item.id}
@@ -238,31 +268,75 @@ export function Rubricator(props) {
                 isChecked={item.isChecked}
                 setIsChecked={item.setIsChecked}
                 lastSelectedMark={lastSelectedMark}
-                //isChecked={false}
+
+                visitedMarks={visitedMarks}
               ></Mark>
             ))}
+            <ProgressBar
+              visitedMarks={visitedMarks}
+              totalMarks={props.data.length}
+            ></ProgressBar>
           </div>
 }
 
-// export function ProgressBar() {
+export function Slider() {
+  const [activeSlide, setActiveSlide] = useState(0);
 
-//   const [visitedCount, setVisitedCount] = useState(0);
+  const handleDotClick = (index) => {
+    setActiveSlide(index);
+  };
 
-//   useEffect(() => {
-//     setVisitedCount(data.filter(item => item.isChecked).length);
-//   }, [data]);
+  const handleNextSlide = () => {
+    setActiveSlide((activeSlide + 1) % 3);
+  };
 
-//   const progress = visitedCount / data.length;
+  useEffect(() => {
+    const intervalId = setInterval(handleNextSlide, 5000);
+    return () => clearInterval(intervalId);
+  }, [activeSlide]);
 
-//   return (
-//     <div className={styles.progressBar}>
-//       <div className={styles.progressBar__progress} style={{ width: `${progress * 100}%`, 
-//       background: `linear-gradient(90deg, rgba(228, 135, 25, 0.2) 0%, rgba(227, 182, 22, 0) 100%), 
-//       ${progress > 0 ? '#FFE145' : 'transparent'}`, borderRadius: `${progress > 0 ? '0px 30px 30px 0px' : '0 px'}` }}>
-//       </div>
-//     </div>
-//   );
-// }
+  return (
+    <div className={styles.slider}>
+      <div className={styles.slider__slides}>
+        <img
+          src="https://webpulse.imgsmail.ru/imgpreview?key=pulse_cabinet-file-f6214867-540f-4c24-8ab0-ad327f92e982&mb=webpulse"
+          alt="Slide 1"
+          className={activeSlide === 0 ? styles.active : ""}
+        ></img>
+        <img
+          src="https://wp-s.ru/wallpapers/1/42/515629262768626/seryj-britanskij-kot-otdyxaet.jpg"
+          alt="Slide 2"
+          className={activeSlide === 1 ? styles.active : ""}
+        ></img>
+        <img
+          src="https://mobimg.b-cdn.net/v3/fetch/98/98a9415b30f3f7cf83f6b2ce6b8e8638.jpeg"
+          alt="Slide 3"
+          className={activeSlide === 2 ? styles.active : ""}
+        ></img>
+      </div>
+      <div className={styles.slider__dots}>
+        <div
+          className={`${styles.slider__dot} ${
+            activeSlide === 0 ? styles.active : ""
+          }`}
+          onClick={() => handleDotClick(0)}
+        ></div>
+        <div
+          className={`${styles.slider__dot} ${
+            activeSlide === 1 ? styles.active : ""
+          }`}
+          onClick={() => handleDotClick(1)}
+        ></div>
+        <div
+          className={`${styles.slider__dot} ${
+            activeSlide === 2 ? styles.active : ""
+          }`}
+          onClick={() => handleDotClick(2)}
+        ></div>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
@@ -282,11 +356,6 @@ export default function Home() {
       </Head>
       <main>
         <Rubricator data={data}></Rubricator>
-        <div className={styles.progressBar}>
-          <div className={styles.progressBar__progress}></div>
-        </div>
-        {/* <ProgressBar visitedCount={visitedCount}></ProgressBar> */}
-        {/* <ProgressBar data={data}></ProgressBar> */}
         <div className={styles.upperbar}>
           <Link href="./registration">
             <button className={styles.upperbar__button}>регистрация</button>
