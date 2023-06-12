@@ -49,9 +49,9 @@ export default function Home() {
         </Head>
         <main>
           <div className={styles.registrationPage}>
-            <Link href="./login">
-              <div className={styles.button__login}>
-                <Button caption='Вход'></Button>
+            <Link href="./">
+              <div className={styles.button__back}>
+                <Button caption='Назад'></Button>
               </div>            
             </Link>
             <div className={styles.registrationPage__title}>
@@ -68,7 +68,16 @@ export default function Home() {
                 <input type="password" id="password" name="password" required></input>
                 <Button type="submit" caption='Отправить'></Button>
               </div>
+<<<<<<< HEAD
               </form> 
+=======
+            </form>
+            <Link href="./login">
+              <div className={styles.button__login}>
+                Вход
+              </div>            
+            </Link>
+>>>>>>> a1920c08eb96ce8eb3c69c5d589d6d2b0c6c2e1e
           </div>  
         </main>
       </div>

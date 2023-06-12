@@ -43,9 +43,9 @@ export default function Home() {
         </Head>
         <main>
           <div className={styles.loginPage}>
-            <Link href="./registration">
-              <div className={styles.button__registration}>
-                <Button caption='Регистрация'></Button>
+            <Link href="./">
+              <div className={styles.button__back}>
+                <Button caption='Назад'></Button>
               </div>
             </Link>
             <div className={styles.loginPage__title}>
@@ -61,6 +61,11 @@ export default function Home() {
                 <Button type="submit" caption='Войти'></Button>
               </div>
             </form>
+            <Link href="./registration">
+              <div className={styles.button__registration}>
+                Регистрация
+              </div>            
+            </Link>
           </div>  
         </main>
       </div>
