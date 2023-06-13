@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from './login.module.scss'
 import Link from 'next/link'
-import { db } from "./firebaseConfig";
+import { db } from "../../firebaseConfig";
 //import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export function Button(props) {

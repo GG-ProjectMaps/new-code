@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from './registration.module.scss'
 import Link from 'next/link'
 import { useState } from "react";
-import { db } from "./firebaseConfig";
+import { db } from "../../firebaseConfig";
 import "firebase/compat/firestore";
 
 export function Button(props) {
