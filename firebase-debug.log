@@ -1,0 +1,51 @@
+[debug] [2023-06-13T10:09:09.020Z] ----------------------------------------------------------------------
+[debug] [2023-06-13T10:09:09.022Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Anastasiya\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2023-06-13T10:09:09.022Z] CLI Version:   12.3.1
+[debug] [2023-06-13T10:09:09.023Z] Platform:      win32
+[debug] [2023-06-13T10:09:09.023Z] Node Version:  v18.16.0
+[debug] [2023-06-13T10:09:09.024Z] Time:          Tue Jun 13 2023 15:09:09 GMT+0500 (Екатеринбург, стандартное время)
+[debug] [2023-06-13T10:09:09.024Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-06-13T10:09:09.091Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-06-13T10:09:09.092Z] > authorizing via signed-in user (anasnik285@gmail.com)
+[debug] [2023-06-13T10:09:09.092Z] [iam] checking project gg-mapproject for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-06-13T10:09:09.094Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/gg-mapproject:testIamPermissions [none]
+[debug] [2023-06-13T10:09:09.094Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/gg-mapproject:testIamPermissions x-goog-quota-user=projects/gg-mapproject
+[debug] [2023-06-13T10:09:09.094Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/gg-mapproject:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-06-13T10:09:10.155Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/gg-mapproject:testIamPermissions 200
+[debug] [2023-06-13T10:09:10.155Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/gg-mapproject:testIamPermissions {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-06-13T10:09:10.157Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gg-mapproject [none]
+[debug] [2023-06-13T10:09:10.630Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gg-mapproject 200
+[debug] [2023-06-13T10:09:10.631Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gg-mapproject {"projectId":"gg-mapproject","projectNumber":"35505130917","displayName":"GG-MapProject","name":"projects/gg-mapproject","resources":{"hostingSite":"gg-mapproject"},"state":"ACTIVE","etag":"1_921dc573-a68c-4ae6-926e-95d3b669ca60"}
+[debug] [2023-06-13T10:09:16.449Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/gg-mapproject/sites pageToken=&pageSize=10
+[debug] [2023-06-13T10:09:17.699Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/gg-mapproject/sites 200
+[debug] [2023-06-13T10:09:17.699Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/gg-mapproject/sites {"sites":[{"name":"projects/gg-mapproject/sites/gg-mapproject","defaultUrl":"https://gg-mapproject.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-06-13T10:09:17.700Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/gg-mapproject/sites 
+[debug] [2023-06-13T10:09:18.751Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/gg-mapproject/sites 200
+[debug] [2023-06-13T10:09:18.751Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/gg-mapproject/sites {"sites":[{"name":"projects/gg-mapproject/sites/gg-mapproject","defaultUrl":"https://gg-mapproject.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2023-06-13T10:09:18.751Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/gg-mapproject/webApps/-/config [none]
+[debug] [2023-06-13T10:09:19.727Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/gg-mapproject/webApps/-/config 200
+[debug] [2023-06-13T10:09:19.727Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/gg-mapproject/webApps/-/config {"projectId":"gg-mapproject","appId":"1:35505130917:web:e01abbb3260295cde52c4c","storageBucket":"gg-mapproject.appspot.com","apiKey":"AIzaSyBSIlQ4suGS5PWX13jGIwljckb_x3o8G90","authDomain":"gg-mapproject.firebaseapp.com","messagingSenderId":"35505130917","measurementId":"G-LLBPTQ5FWS"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2023-06-13T10:09:42.234Z] Error: Build optimization failed: found page without a React Component as default export in 
+pages/firebaseConfig
+
+See https://nextjs.org/docs/messages/page-without-valid-component for more info.
+
+    at C:\Users\Anastasiya\new-code\node_modules\next\dist\build\index.js:1239:29
+    at async Span.traceAsyncFn (C:\Users\Anastasiya\new-code\node_modules\next\dist\trace\trace.js:103:20)
+    at async build (C:\Users\Anastasiya\new-code\node_modules\next\dist\build\index.js:143:29)
+    at async build (C:\Users\Anastasiya\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\next\index.js:57:5)
+    at async prepareFrameworks (C:\Users\Anastasiya\AppData\Roaming\npm\node_modules\firebase-tools\lib\frameworks\index.js:211:33)
+    at async deploy (C:\Users\Anastasiya\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:55:13)
+[error] 
+[error] Error: An unexpected error has occurred.

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "gg-mapproject"
-  }
+    "default": "gg-mapproject",
+    "gg": "gg-mapproject"
+  },
+  "targets": {},
+  "etags": {}
 }

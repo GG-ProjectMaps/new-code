@@ -4,8 +4,6 @@ import Link from 'next/link'
 import { useState } from "react";
 import { db } from "./firebaseConfig";
 import "firebase/compat/firestore";
-import { serverTimestamp } from "firebase/firestore";
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 export function Button(props) {
   return <button className={`${styles.button}
