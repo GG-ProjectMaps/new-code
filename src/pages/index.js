@@ -9,7 +9,7 @@ const allImages = [['/images/shalomshanghai/1.jpg', '/images/shalomshanghai/2.jp
 ['/images/samosvet/1.jpg', '/images/samosvet/2.jpg', '/images/samosvet/3.png'],
 ['/images/fabrica/1.jpg', '/images/fabrica/2.jpg', '/images/fabrica/3.jpg'],
 ['/images/union/1.jpg', '/images/union/2.jpg', '/images/union/3.jpg'],
-['/images/emii/1.png', '/images/union/2.jpg', '/images/union/3.jpg'],
+['/images/emii/1.png', '/images/emii/2.jpg', '/images/emii/3.jpg'],
 ['/images/jackie/1.jpg', '/images/jackie/2.jpg', '/images/jackie/3.jpg'],
 ['/images/urals/1.jpg', '/images/urals/2.jpg', '/images/urals/3.jpg'],
 ['/images/geograph/1.png', '/images/geograph/2.jpg', '/images/geograph/3.png'],
