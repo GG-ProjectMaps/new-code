@@ -395,12 +395,12 @@ export default function Home() {
           <Link href="./registration">
             <button className={styles.upperbar__button}>регистрация</button>
           </Link>
-          <Link href="./login">
-            <button className={styles.upperbar__button}>вход</button>
-          </Link>
           <div className={styles.upperbar__logo}>
             Underground map
           </div>
+          <Link href="./login">
+            <button className={styles.upperbar__button}>вход</button>
+          </Link>
         </div>
       </main>
     </div></>
