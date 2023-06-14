@@ -2,7 +2,6 @@ import Head from 'next/head'
 import styles from './login.module.scss'
 import Link from 'next/link'
 import { db } from "../../firebaseConfig";
-//import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 export function Button(props) {
   return <button className={`${styles.button}
@@ -22,7 +21,10 @@ export default function Home() {
         alert('Неверный email или пароль');
       } else {
         form.reset();
+        const user = snapshot.docs[0].data();
+        localStorage.setItem('user', JSON.stringify(user));
         alert('Вход успешно выполнен!');
+        window.location.href = './';
       }
     } catch (error) {
       alert(`Ошибка: ${error.message}`);
@@ -43,7 +45,7 @@ export default function Home() {
         </Head>
         <main>
           <div className={styles.loginPage}>
-            <Link href="./">
+            <Link href="./index">
               <div className={styles.button__back}>
                 <Button caption='Назад'></Button>
               </div>

@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'; 
 import Link from 'next/link';
+import { db } from "../../firebaseConfig";
 
 const allImages = [['/images/shalomshanghai/1.jpg', '/images/shalomshanghai/2.jpg', '/images/shalomshanghai/3.jpg'],
 ['/images/shurumburum/1.png', '/images/shurumburum/2.png', '/images/shurumburum/3.png'],
@@ -374,6 +375,23 @@ export function Slider(props) {
 }
 
 export default function Home() {
+  const [nickname, setNickname] = useState('');
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        setNickname(userData.nickname);
+      } catch (error) {
+        alert(`Ошибка: ${error.message}`);
+      }
+    }
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload()
+  }
   return (
     <><div className={styles.container}>
       <Head>
@@ -391,17 +409,29 @@ export default function Home() {
       </Head>
       <main>
         <Rubricator data={data}></Rubricator>
-        <div className={styles.upperbar}>
-          <Link href="./registration">
-            <button className={styles.upperbar__button}>регистрация</button>
-          </Link>
-          <Link href="./login">
-            <button className={styles.upperbar__button}>вход</button>
-          </Link>
-          <div className={styles.upperbar__logo}>
-            Underground map
+        {nickname ? (
+          <div className={styles.upperbar}>
+            <div className={styles.upperbar__button}>
+              Добро пожаловать, {nickname}!
+            </div>
+            <div className={styles.upperbar__logo}>
+              Underground map
+            </div>
+            <button className={styles.upperbar__button} onClick={handleLogout}>Выход</button>
           </div>
-        </div>
+        ) : (
+          <div className={styles.upperbar}>
+            <Link href="./registration">
+              <button className={styles.upperbar__button}>регистрация</button>
+            </Link>
+            <div className={styles.upperbar__logo}>
+            Underground map
+            </div>
+            <Link href="./login">
+              <button className={styles.upperbar__button}>вход</button>
+            </Link>
+          </div>
+        )}
       </main>
     </div></>
   )
