@@ -128,6 +128,9 @@
         border: 6px solid #000000;
         border-left: 5px solid black;
         border-radius: 0px 10px 10px 0px;
+        @media only screen and (min-width: 1367px) {
+            font-size: 16px;
+        }
         &_clicked {
             display: flex;
         }
@@ -210,6 +213,9 @@
         font-style: normal;
         font-weight: 400;
         border: none;
+        @media only screen and (min-width: 1367px) {
+            font-size: 26px;
+        }
     }
 
 
@@ -223,7 +229,7 @@
         justify-content: center;
         background-position: 55% 20%;
         background-image: url('/images/leftbarClosed.png');
-        background-size: 103%;
+        background-size: 101%;
         background-repeat: no-repeat;
         &_isOpened {
             background-image: none;
@@ -283,6 +289,9 @@
                     z-index: 1;
                     display: flex;
                 }
+                @media only screen and (min-width: 1367px) {
+                    font-size: 30px;
+                }
             }
             .content__photos {
                 width: 85.3%;
@@ -309,6 +318,9 @@
                 width: 80%;
                 height: 48%;
                 margin-top: 1%;
+                @media only screen and (min-width: 1367px) {
+                    font-size: 15px;
+                }
                 &_isOpened {
                     z-index: 1;
                     display: block;
@@ -376,6 +388,9 @@
         &:active {
             color: #FFED8D;
         }
+        @media only screen and (min-width: 1367px) {
+            font-size: 20px;
+        }
     }
     .upperbar__logo {
         font-family: 'Sedgwick Ave Display';
@@ -388,6 +403,9 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
         user-select: none;
+        @media only screen and (min-width: 1367px) {
+            font-size: 30px;
+        }
     }
 }
   
