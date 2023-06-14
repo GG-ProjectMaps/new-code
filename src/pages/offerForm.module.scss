@@ -14,12 +14,16 @@
     background: #FFE145;
     color: #1D1D1D;
     border-radius: 5px;
+    border: none;
     font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
     width: 8%;
     padding: 0.5%;
+    @media only screen and (min-width: 1367px) {
+        font-size: 20px;
+    }
     &:hover {
         background: #FFED90;
     }
@@ -59,6 +63,9 @@
         background-clip: text;
         bottom: 70%;
         left: 32%;
+        @media only screen and (min-width: 1367px) {
+            font-size: 126px;
+        }
     }
 
     .form {
@@ -76,6 +83,9 @@
         top: 30%;
         left: 38%;
         gap: 1%;
+        @media only screen and (min-width: 1367px) {
+            font-size: 16px;
+        }
         .form__title{
             text-align: center;
             display: flex;
@@ -84,6 +94,9 @@
             font-size: 25px;
             margin-top: 5%;
             margin-bottom: 2%;
+            @media only screen and (min-width: 1367px) {
+                font-size: 30px;
+            }
         }
         input {
             border: 2px solid #F2F2F2;
@@ -97,8 +110,9 @@
             font-size: 14px;
             color: #F2F2F2;
             padding-left: 2%;
-        }
-        label {
+            @media only screen and (min-width: 1367px) {
+                font-size: 18px;
+            }
         }
         .button {
             position: absolute;
