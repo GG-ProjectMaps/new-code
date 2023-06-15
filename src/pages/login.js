@@ -16,13 +16,15 @@ export default function Home() {
     const password = form.password.value;
     try {
       const collectionRef = db.collection('users');
-      const snapshot = await collectionRef.where('email', '==', email).where('password', '==', password).get();
+      const userRef = collectionRef.where('email', '==', email).where('password', '==', password);
+      const snapshot = await userRef.get();
       if (snapshot.empty) {
         alert('Неверный email или пароль');
       } else {
         form.reset();
         const user = snapshot.docs[0].data();
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userDocId', snapshot.docs[0].id); 
         alert('Вход успешно выполнен!');
         window.location.href = './';
       }

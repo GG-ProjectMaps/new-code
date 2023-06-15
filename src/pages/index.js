@@ -3,6 +3,7 @@ import styles from './index.module.scss'
 import React, { useState, useEffect } from 'react'; 
 import Link from 'next/link';
 import { db } from "../../firebaseConfig";
+import "firebase/compat/firestore";
 
 const allImages = [['/images/shalomshanghai/1.jpg', '/images/shalomshanghai/2.jpg', '/images/shalomshanghai/3.jpg'],
 ['/images/shurumburum/1.png', '/images/shurumburum/2.png', '/images/shurumburum/3.png'],
@@ -82,16 +83,62 @@ export function LeftBar(props) {
   const { price, description, link, link1, link2, address, name, isOpened, map, images, setVisitedMarks} = props;
   const [isMapOpened, setIsMapOpened] = useState(false);
   const [isVisited, setIsVisited] = useState(false);
-  const handleClick = () => {
+
+  useEffect(() => {
+    const userDocId = localStorage.getItem('userDocId');
+    if (userDocId) {
+      const userRef = db.collection('users').doc(userDocId);
+      userRef.get().then(doc => {
+        if (doc.exists) {
+          setVisitedMarks(doc.data().visitedPlaces);
+          const allVisitedPlaces = doc.data().visitedPlaces;
+          setVisitedMarks(allVisitedPlaces);
+          if (allVisitedPlaces.includes(name)) {
+            setIsVisited(true);
+          } else {
+            setIsVisited(false);
+          }
+        } else {
+          setVisitedMarks([]);
+        }
+      });
+    }
+  }, []);
+
+  const handleClick = async () => {
+    const userDocId = localStorage.getItem('userDocId');
+    
     setIsVisited(!isVisited);
-    setVisitedMarks(prevVisitedMarks => {
+    if (userDocId) {
+      
+      const userRef = db.collection('users').doc(userDocId);
+      const doc = await userRef.get();
+      const visitedPlaces = doc.exists ? doc.data().visitedPlaces : [];
       if (isVisited) {
-        return prevVisitedMarks.filter(markName => markName !== name);
+        await userRef.update({
+          visitedPlaces: visitedPlaces.filter(place => place !== name)
+        }).then(() => {
+          setVisitedMarks(prevVisitedMarks => prevVisitedMarks.filter(markName => markName !== name));
+          setIsVisited(false);
+        });
       } else {
-        return [...prevVisitedMarks, name];
+        await userRef.update({
+          visitedPlaces: [...visitedPlaces, name]
+        }).then(() => {
+          setVisitedMarks(prevVisitedMarks => [...prevVisitedMarks, name]);
+          setIsVisited(true);
+        });
       }
-    });
-  };
+    } else {
+      setVisitedMarks(prevVisitedMarks => {
+        if (isVisited) {
+          return prevVisitedMarks.filter(markName => markName !== name);
+        } else {
+          return [...prevVisitedMarks, name];
+        }
+      });
+    }
+  }; 
 
   const handleClickMapButton = () => {
     setIsMapOpened(!isMapOpened);
@@ -390,6 +437,7 @@ export default function Home() {
   }, []);
   const handleLogout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('userDocId');
     window.location.reload()
   }
   return (
@@ -404,6 +452,8 @@ export default function Home() {
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet"></link>
+        <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <title>Underground Map</title>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
       </Head>

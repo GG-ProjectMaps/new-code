@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import styles from './registration.module.scss'
 import Link from 'next/link'
-import { useState } from "react";
 import { db } from "../../firebaseConfig";
 import "firebase/compat/firestore";
 
@@ -17,12 +16,14 @@ export default function Home() {
     const nickname = form.fullname.value;
     const email = form.email.value;
     const password = form.password.value;
+    var visitedPlaces = [];
     try {
       const collectionRef = db.collection('users');
       await collectionRef.add({
         nickname,
         email,
         password,
+        visitedPlaces
       });
       form.reset();
       alert('Регистрация успешно завершена!');
