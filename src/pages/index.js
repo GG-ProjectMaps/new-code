@@ -411,13 +411,13 @@ export default function Home() {
         <Rubricator data={data}></Rubricator>
         {nickname ? (
           <div className={styles.upperbar}>
-            <div className={styles.upperbar__button}>
-              Добро пожаловать, {nickname}!
+            <div className={styles.upperbar__welcome}>
+              Привет, {nickname}!
             </div>
             <div className={styles.upperbar__logo}>
               Underground map
             </div>
-            <button className={styles.upperbar__button} onClick={handleLogout}>Выход</button>
+            <button className={styles.upperbar__button} onClick={handleLogout}>выход</button>
           </div>
         ) : (
           <div className={styles.upperbar}>
