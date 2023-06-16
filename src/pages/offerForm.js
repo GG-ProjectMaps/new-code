@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import styles from './offerForm.module.scss'
 import Link from 'next/link'
+import { db } from "../../firebaseConfig";
+import "firebase/compat/firestore";
 
 export function Button(props) {
   return <button className={`${styles.button}
@@ -8,6 +10,27 @@ export function Button(props) {
 }
 
 export default function Home() {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const category = form.category.value;
+    const name = form.name.value;
+    const adress = form.adress.value;
+    const comment = form.comment.value;
+    try {
+      const collectionRef = db.collection('offers');
+      await collectionRef.add({
+        category,
+        name,
+        adress,
+        comment
+      });
+      form.reset();
+      alert('Форма успешно отправлена!');
+    } catch (error) {
+      alert(`Ошибка: ${error.message}`);
+    }
+  };
     return (
       <div className={styles.container}>
         <Head>
@@ -30,7 +53,7 @@ export default function Home() {
             <div className={styles.offerFormPage__title}>
               Underground
             </div>
-            <form action="process_offer.php" method="post">
+            <form onSubmit={handleSubmit}>
               <div className={styles.form}>
                 <div className={styles.form__title}>Форма для предложения нового места</div>
                 <label for="category">Категория места</label>
